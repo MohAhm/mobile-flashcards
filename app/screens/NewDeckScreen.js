@@ -1,11 +1,18 @@
 import React from 'react'
-import { StyleSheet, Text } from 'react-native'
-import Screen from '../components/Screen'
+import { StyleSheet, Text, Button } from 'react-native'
 
-export default function NewDeckScreen() {
+import Screen from '../components/Screen'
+import routes from '../navigation/routes'
+
+export default function NewDeckScreen({ navigation }) {
     return (
         <Screen>
             <Text>New Deck View</Text>
+
+            <Button
+                title='Create Deck'
+                onPress={() => navigation.navigate(routes.INDIVIDUALDECK)}
+            />
         </Screen>
     )
 }

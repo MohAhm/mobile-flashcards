@@ -1,12 +1,13 @@
 import React from 'react'
-import DeckListScreen from './app/screens/DeckListScreen'
-import IndividualDeckScreen from './app/screens/IndividualDeckScreen'
-import QuizScreen from './app/screens/QuizScreen'
-import NewDeckScreen from './app/screens/NewDeckScreen'
-import NewQuestionScreen from './app/screens/NewQuestionScreen'
+import { NavigationContainer } from '@react-navigation/native'
+
+import AppNavigator from './app/navigation/AppNavigator'
+import navigationTheme from './app/navigation/navigationTheme'
 
 export default function App() {
 	return (
-		<NewQuestionScreen />
+		<NavigationContainer theme={navigationTheme}>
+			<AppNavigator />
+		</NavigationContainer>
 	)
 }
