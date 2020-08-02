@@ -11,7 +11,7 @@ const Stack = createStackNavigator()
 const NewDeckNavigator = () => (
     <Stack.Navigator
         screenOptions={{
-            headerStyle: { backgroundColor: colors.primary },
+            headerStyle: { backgroundColor: colors.purple },
             headerTintColor: colors.white,
         }}
     >

@@ -13,7 +13,7 @@ const Stack = createStackNavigator()
 const DeckNavigator = () => (
     <Stack.Navigator
         screenOptions={{
-            headerStyle: { backgroundColor: colors.primary },
+            headerStyle: { backgroundColor: colors.purple },
             headerTintColor: colors.white,
         }}
     >
