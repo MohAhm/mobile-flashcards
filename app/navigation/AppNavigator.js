@@ -1,42 +1,47 @@
 import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { createStackNavigator } from '@react-navigation/stack'
 
-import DeckNavigator from './DeckNavigator'
-import NewDeckNavigator from './NewDeckNavigator'
+import HomeNavigator from './HomeNavigator'
+import DeckDetailsScreen from '../screens/DeckDetailsScreen'
+import NewQuizScreen from '../screens/NewQuizScreen'
+import QuizScreen from '../screens/QuizScreen'
 import routes from './routes'
+import colors from '../config/colors'
 
-const Tab = createBottomTabNavigator()
+const Stack = createStackNavigator()
 
 const AppNavigator = () => (
-    <Tab.Navigator>
-        <Tab.Screen
-            name={routes.DECKLIST}
-            component={DeckNavigator}
+    <Stack.Navigator
+        screenOptions={{
+            headerStyle: { backgroundColor: colors.purple },
+            headerTintColor: colors.white,
+            headerBackTitleVisible: false,
+        }}
+    >
+        <Stack.Screen
+            name={routes.HOME}
+            component={HomeNavigator}
             options={{
-                tabBarIcon: ({ color, size }) => (
-                    <Ionicons
-                        name='ios-bookmarks'
-                        color={color}
-                        size={size}
-                    />
-                )
+                headerTitle: false,
             }}
         />
-        <Tab.Screen
-            name={routes.NEWDECK}
-            component={NewDeckNavigator}
+
+        <Stack.Screen
+            name={routes.DECKDETAILS}
+            component={DeckDetailsScreen}
+            options={({ route }) => ({ title: route.params.title })}
+        />
+
+        <Stack.Screen
+            name={routes.NEWQUIZ}
+            component={NewQuizScreen}
             options={{
-                tabBarIcon: ({ color, size }) => (
-                    <FontAwesome
-                        name='plus-square'
-                        color={color}
-                        size={size}
-                    />
-                )
+                headerTitle: 'Add Card',
             }}
         />
-    </Tab.Navigator>
+
+        <Stack.Screen name={routes.QUIZ} component={QuizScreen} />
+    </Stack.Navigator>
 )
 
 export default AppNavigator

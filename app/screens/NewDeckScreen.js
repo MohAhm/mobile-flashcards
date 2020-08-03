@@ -11,7 +11,7 @@ export default function NewDeckScreen({ navigation }) {
 
             <Button
                 title='Create Deck'
-                onPress={() => navigation.navigate(routes.INDIVIDUALDECK)}
+                onPress={() => navigation.navigate(routes.DECKDETAILS, 'New')}
             />
         </Screen>
     )

@@ -3,6 +3,7 @@ import { StyleSheet, Text, Button, FlatList } from 'react-native'
 
 import Screen from '../components/Screen'
 import routes from '../navigation/routes'
+import colors from '../config/colors'
 import Deck from '../components/Deck'
 
 function generateUID () {
@@ -33,7 +34,7 @@ export default function DeckListScreen({ navigation }) {
                     <Deck
                         title={item.title}
                         numCard={item.numCard + ' cards'}
-                        onPress={() => navigation.navigate(routes.INDIVIDUALDECK, item)}
+                        onPress={() => navigation.navigate(routes.DECKDETAILS, item)}
                     />
                 }
             />
@@ -44,5 +45,6 @@ export default function DeckListScreen({ navigation }) {
 const styles = StyleSheet.create({
     screen: {
         padding: 20,
+        backgroundColor: colors.light,
     },
 })

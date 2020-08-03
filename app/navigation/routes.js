@@ -1,8 +1,8 @@
 export default Object.freeze({
-    DECKLIST: 'DeckList',
+    HOME: 'HOME',
+    DECKS: 'Decks',
     NEWDECK: 'NewDeck',
-    INDIVIDUALDECK: 'IndividualDeck',
-    NEWDECK: 'NewDeck',
-    NEWQUESTION: 'NewQuestion',
+    DECKDETAILS: 'DeckDetails',
     QUIZ: 'Quiz',
+    NEWQUIZ: 'NewQuiz',
 })

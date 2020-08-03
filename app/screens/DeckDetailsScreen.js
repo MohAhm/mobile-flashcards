@@ -4,14 +4,16 @@ import { StyleSheet, Text, Button } from 'react-native'
 import Screen from '../components/Screen'
 import routes from '../navigation/routes'
 
-export default function IndividualDeckScreen({ navigation }) {
+export default function DeckDetailsScreen({ navigation, route }) {
+    const deck = route.params
+
     return (
         <Screen>
-            <Text>Individual Deck View</Text>
+            <Text>{deck.title}</Text>
 
             <Button
                 title='Add Card'
-                onPress={() => navigation.navigate(routes.NEWQUESTION)}
+                onPress={() => navigation.navigate(routes.NEWQUIZ)}
             />
 
             <Button
