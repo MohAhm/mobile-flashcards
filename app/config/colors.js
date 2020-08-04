@@ -5,4 +5,6 @@ export default {
     white: '#fff',
     dark: '#0c0c0c',
     gray: '#757575',
+    danger: '#a00',
+    success: '#0a0',
 }

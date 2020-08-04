@@ -1,27 +1,65 @@
 import React from 'react'
-import { StyleSheet, Text, Button } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import Screen from '../components/Screen'
 import routes from '../navigation/routes'
+import AppText from '../components/AppText'
+import colors from '../config/colors'
+import AppButton from '../components/AppButton'
 
 export default function DeckDetailsScreen({ navigation, route }) {
     const deck = route.params
 
     return (
-        <Screen>
-            <Text>{deck.title}</Text>
+        <Screen style={styles.screen}>
+            <View style={styles.detailsContainer}>
+                <AppText style={styles.title}>{deck.title}</AppText>
+                <AppText style={styles.numCard}>{deck.numCard} cards</AppText>
+            </View>
 
-            <Button
-                title='Add Card'
-                onPress={() => navigation.navigate(routes.NEWQUIZ)}
-            />
+            <View style={styles.buttonContainer}>
+                <AppButton
+                    title='Add Card'
+                    outline
+                    onPress={() => navigation.navigate(routes.NEWQUIZ)}/>
 
-            <Button
-                title='Start Quiz'
-                onPress={() => navigation.navigate(routes.QUIZ)}
-            />
+                <AppButton title='Start Quiz' onPress={() => navigation.navigate(routes.QUIZ)}/>
+
+                <AppButton
+                    title='Delete Deck'
+                    color='danger'
+                    outline
+                    onPress={() => console.log('Deleted!')}/>
+            </View>
         </Screen>
     )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    screen: {
+        padding: 20,
+    },
+
+    detailsContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    title: {
+        fontSize: 36,
+        color: colors.purple,
+        marginBottom: 10,
+    },
+
+    numCard: {
+        fontSize: 20,
+        color: colors.gray,
+        fontWeight: 'bold',
+    },
+
+    buttonContainer: {
+        flex: 1,
+        padding: 20,
+    },
+})
