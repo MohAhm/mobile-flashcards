@@ -2,10 +2,10 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import Screen from '../components/Screen'
-import routes from '../navigation/routes'
 import AppText from '../components/AppText'
-import colors from '../config/colors'
 import AppButton from '../components/AppButton'
+import routes from '../navigation/routes'
+import colors from '../config/colors'
 
 export default function DeckDetailsScreen({ navigation, route }) {
     const deck = route.params

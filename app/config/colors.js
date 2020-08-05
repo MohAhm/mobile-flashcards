@@ -4,7 +4,7 @@ export default {
     light: '#eeedfa',
     white: '#fff',
     dark: '#0c0c0c',
-    gray: '#757575',
+    gray: '#6e6969',
     danger: '#a00',
     success: '#0a0',
 }

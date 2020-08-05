@@ -22,7 +22,7 @@ const AppNavigator = () => (
             name={routes.HOME}
             component={HomeNavigator}
             options={{
-                headerTitle: false,
+                headerTitle: 'Mobile Flashcards',
             }}
         />
 

@@ -1,20 +1,50 @@
 import React from 'react'
-import { StyleSheet, Text, Button } from 'react-native'
+import { StyleSheet } from 'react-native'
+import * as Yup from 'yup'
 
+import {
+    AppForm as Form,
+    AppFormField as FormField,
+    SubmitButton
+} from '../components/forms'
 import Screen from '../components/Screen'
+import AppText from '../components/AppText'
 import routes from '../navigation/routes'
+import colors from '../config/colors'
+
+const validationSchema =  Yup.object().shape({
+    title: Yup.string().required().min(1).label('Title'),
+})
 
 export default function NewDeckScreen({ navigation }) {
     return (
-        <Screen>
-            <Text>New Deck View</Text>
+        <Screen style={styles.screen}>
+            <AppText style={styles.text}>What is the title of your new deck?</AppText>
 
-            <Button
-                title='Create Deck'
-                onPress={() => navigation.navigate(routes.DECKDETAILS, 'New')}
-            />
+            <Form
+                initialValues={{ title: '' }}
+                onSubmit={values => navigation.navigate(routes.DECKDETAILS, values)}
+                validationSchema={validationSchema}
+            >
+                <FormField maxLength={255} name='title' placeholder='Deck Title'/>
+
+                <SubmitButton title='Create Deck'/>
+            </Form>
         </Screen>
     )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    screen: {
+        padding: 20,
+        backgroundColor: colors.light,
+        justifyContent: 'center',
+    },
+
+    text: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 40,
+    },
+})
