@@ -14,7 +14,7 @@ export default function DeckDetailsScreen({ navigation, route }) {
         <Screen style={styles.screen}>
             <View style={styles.detailsContainer}>
                 <AppText style={styles.title}>{deck.title}</AppText>
-                <AppText style={styles.numCard}>{deck.numCard} cards</AppText>
+                <AppText style={styles.numCard}>{deck.questions.length} cards</AppText>
             </View>
 
             <View style={styles.buttonContainer}>
