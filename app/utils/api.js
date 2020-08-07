@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native'
 export const FLASHCARDS_STORAGE_KEY = 'MobileFlashcards:decks'
 
 let decks = {
-    React: {
+    '8xf0y6ziyjabvozdd253nd': {
         id: '8xf0y6ziyjabvozdd253nd',
         title: 'React',
         questions: [
@@ -17,7 +17,7 @@ let decks = {
             }
         ]
     },
-    JavaScript: {
+    'am8ehyc8byjqgar0jgpub9': {
         id: 'am8ehyc8byjqgar0jgpub9',
         title: 'JavaScript',
         questions: [
@@ -34,7 +34,7 @@ function generateUID () {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
-const getDecks = async () => {
+export const _getDecks = async () => {
     try {
         const values = await AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
         const items = JSON.parse(values)
@@ -49,31 +49,44 @@ const getDecks = async () => {
     }
 }
 
-const saveDeckTitle = async (title) => {
+export const _saveDeckTitle = async (title) => {
     try {
-        const item = {
-            id: generateUID(),
+        const id = generateUID()
+
+        const deck = {
+            id,
             title,
             questions: []
         }
 
-        await AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify({[title]: item}))
+        await AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify({[id]: deck}))
+
+        return deck
     } catch (error) {
         console.log(error)
     }
 }
 
-const clearStorage = async () => {
+export const _removeDeck = async (id) => {
+    try {
+        const values = await AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
+        const items = JSON.parse(values)
+
+        items[id] = undefined
+        delete items[id]
+
+        await AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(items))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// temp ...
+export const clearStorage = async () => {
     try {
         const keys = await AsyncStorage.getAllKeys();
         await AsyncStorage.multiRemove(keys);
     } catch (error) {
         console.log(error)
     }
-}
-
-export default {
-    getDecks,
-    saveDeckTitle,
-    clearStorage, //temp...
 }

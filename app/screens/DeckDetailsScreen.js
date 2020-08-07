@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import Screen from '../components/Screen'
@@ -7,32 +7,45 @@ import AppButton from '../components/AppButton'
 import routes from '../navigation/routes'
 import colors from '../config/colors'
 
-export default function DeckDetailsScreen({ navigation, route }) {
-    const deck = route.params
+import { connect } from 'react-redux'
+import { removeDeck } from '../actions'
 
-    return (
-        <Screen style={styles.screen}>
-            <View style={styles.detailsContainer}>
-                <AppText style={styles.title}>{deck.title}</AppText>
-                <AppText style={styles.numCard}>{deck.questions.length} cards</AppText>
-            </View>
+class DeckDetailsScreen extends Component{
+    handleDeleteDeck = id => {
+        console.log(id)
 
-            <View style={styles.buttonContainer}>
-                <AppButton
-                    title='Add Card'
-                    outline
-                    onPress={() => navigation.navigate(routes.NEWQUIZ)}/>
+        this.props.dispatch(removeDeck(id))
+        this.props.navigation.goBack()
+    }
 
-                <AppButton title='Start Quiz' onPress={() => navigation.navigate(routes.QUIZ)}/>
+    render () {
+        const { navigation, route } = this.props
+        const deck = route.params
 
-                <AppButton
-                    title='Delete Deck'
-                    color='danger'
-                    outline
-                    onPress={() => console.log('Deleted!')}/>
-            </View>
-        </Screen>
-    )
+        return (
+            <Screen style={styles.screen}>
+                <View style={styles.detailsContainer}>
+                    <AppText style={styles.title}>{deck.title}</AppText>
+                    <AppText style={styles.numCard}>{deck.questions.length} cards</AppText>
+                </View>
+
+                <View style={styles.buttonContainer}>
+                    <AppButton
+                        title='Add Card'
+                        outline
+                        onPress={() => navigation.navigate(routes.NEWQUIZ)}/>
+
+                    <AppButton title='Start Quiz' onPress={() => navigation.navigate(routes.QUIZ)}/>
+
+                    <AppButton
+                        title='Delete Deck'
+                        color='danger'
+                        outline
+                        onPress={() => this.handleDeleteDeck(deck.id)}/>
+                </View>
+            </Screen>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -63,3 +76,6 @@ const styles = StyleSheet.create({
         padding: 20,
     },
 })
+
+
+export default connect()(DeckDetailsScreen)

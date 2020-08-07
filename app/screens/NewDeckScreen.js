@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
 import * as Yup from 'yup'
 
@@ -11,32 +11,36 @@ import Screen from '../components/Screen'
 import AppText from '../components/AppText'
 import routes from '../navigation/routes'
 import colors from '../config/colors'
-import api from '../utils/api'
+
+import { connect } from 'react-redux'
+import { saveDeckTitle } from '../actions'
 
 const validationSchema =  Yup.object().shape({
     title: Yup.string().required().min(1).label('Title'),
 })
 
-export default function NewDeckScreen({ navigation }) {
-    handleSaveDeck = async (title) => {
-        await api.saveDeckTitle(title)
+class NewDeckScreen extends Component {
+    handleAddDeck = title => {
+        this.props.dispatch(saveDeckTitle(title))
     }
 
-    return (
-        <Screen style={styles.screen}>
-            <AppText style={styles.text}>What is the title of your new deck?</AppText>
+    render () {
+        return (
+            <Screen style={styles.screen}>
+                <AppText style={styles.text}>What is the title of your new deck?</AppText>
 
-            <Form
-                initialValues={{ title: '' }}
-                onSubmit={values => handleSaveDeck(values.title)}
-                validationSchema={validationSchema}
-            >
-                <FormField maxLength={255} name='title' placeholder='Deck Title'/>
+                <Form
+                    initialValues={{ title: '' }}
+                    onSubmit={values => this.handleAddDeck(values.title)}
+                    validationSchema={validationSchema}
+                >
+                    <FormField maxLength={255} name='title' placeholder='Deck Title'/>
 
-                <SubmitButton title='Create Deck'/>
-            </Form>
-        </Screen>
-    )
+                    <SubmitButton title='Create Deck'/>
+                </Form>
+            </Screen>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -53,3 +57,6 @@ const styles = StyleSheet.create({
         marginBottom: 40,
     },
 })
+
+
+export default connect()(NewDeckScreen)
