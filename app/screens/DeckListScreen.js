@@ -2,23 +2,22 @@ import React, { Component } from 'react'
 import { StyleSheet, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 
-import { getDecks, clearData } from '../actions'
+import { handleInitialData, clearData } from '../actions'
+import Screen from '../components/Screen'
+import AppText from '../components/AppText'
+import Deck from '../components/Deck'
 import routes from '../navigation/routes'
 import colors from '../config/colors'
-import Screen from '../components/Screen'
-import Deck from '../components/Deck'
-import AppText from '../components/AppText'
 
 
 class DeckListScreen extends Component {
     componentDidMount() {
         // this.props.dispatch(clearData()) // temp
-        this.props.dispatch(getDecks())
+        this.props.dispatch(handleInitialData())
     }
 
     render () {
         const { decks, navigation } = this.props
-        console.log(decks)
 
         if (Object.entries(decks).length === 0) {
             return (

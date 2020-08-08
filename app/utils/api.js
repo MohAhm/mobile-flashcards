@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native'
 export const FLASHCARDS_STORAGE_KEY = 'MobileFlashcards:decks'
 
 let decks = {
-    '8xf0y6ziyjabvozdd253nd': {
+    React: {
         id: '8xf0y6ziyjabvozdd253nd',
         title: 'React',
         questions: [
@@ -17,7 +17,7 @@ let decks = {
             }
         ]
     },
-    'am8ehyc8byjqgar0jgpub9': {
+    JavaScript: {
         id: 'am8ehyc8byjqgar0jgpub9',
         title: 'JavaScript',
         questions: [
@@ -49,6 +49,20 @@ export const _getDecks = async () => {
     }
 }
 
+export const _getDeck = async (id) => {
+    try {
+        const values = await AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
+        const items = JSON.parse(values)
+
+        for (let deck in items) {
+            if (items[deck].id === id)
+                return items[deck]
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const _saveDeckTitle = async (title) => {
     try {
         const id = generateUID()
@@ -59,7 +73,7 @@ export const _saveDeckTitle = async (title) => {
             questions: []
         }
 
-        await AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify({[id]: deck}))
+        await AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify({[title]: deck}))
 
         return deck
     } catch (error) {
@@ -72,10 +86,30 @@ export const _removeDeck = async (id) => {
         const values = await AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
         const items = JSON.parse(values)
 
-        items[id] = undefined
-        delete items[id]
+        const deck = await _getDeck(id)
+
+        items[deck.title] = undefined
+        delete items[deck.title]
 
         await AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(items))
+
+        return deck.title
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const _addCardToDeck = async (id, card) => {
+    try {
+        const deck = await _getDeck(id)
+
+        await AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify({
+            [deck.title]: {
+                questions: [...deck.questions].concat(card)
+            }
+        }))
+
+        return deck.title
     } catch (error) {
         console.log(error)
     }

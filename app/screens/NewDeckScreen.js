@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
 import * as Yup from 'yup'
+import { connect } from 'react-redux'
 
+import { saveDeckTitle } from '../actions'
 import {
     AppForm as Form,
     AppFormField as FormField,
@@ -12,16 +14,29 @@ import AppText from '../components/AppText'
 import routes from '../navigation/routes'
 import colors from '../config/colors'
 
-import { connect } from 'react-redux'
-import { saveDeckTitle } from '../actions'
 
 const validationSchema =  Yup.object().shape({
     title: Yup.string().required().min(1).label('Title'),
 })
 
 class NewDeckScreen extends Component {
+    state = {
+        deckTitle: ''
+    }
+
     handleAddDeck = title => {
         this.props.dispatch(saveDeckTitle(title))
+        this.setState({ deckTitle: title })
+    }
+
+    componentDidUpdate(prevProps) {
+        const { deckTitle } = this.state
+        const { decks, navigation } = this.props
+
+        if (decks !== prevProps.decks) {
+            navigation.navigate(routes.DECKDETAILS, decks[deckTitle])
+            this.setState({ deckTitle: '' })
+        }
     }
 
     render () {
@@ -58,5 +73,10 @@ const styles = StyleSheet.create({
     },
 })
 
+function mapStateToProps(state) {
+    return {
+        decks: state
+    }
+}
 
-export default connect()(NewDeckScreen)
+export default connect(mapStateToProps)(NewDeckScreen)

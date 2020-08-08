@@ -1,26 +1,32 @@
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { connect } from 'react-redux'
 
+import { removeDeck } from '../actions'
 import Screen from '../components/Screen'
 import AppText from '../components/AppText'
 import AppButton from '../components/AppButton'
 import routes from '../navigation/routes'
 import colors from '../config/colors'
 
-import { connect } from 'react-redux'
-import { removeDeck } from '../actions'
 
 class DeckDetailsScreen extends Component{
     handleDeleteDeck = id => {
-        console.log(id)
-
         this.props.dispatch(removeDeck(id))
-        this.props.navigation.goBack()
+    }
+
+    componentDidUpdate(prevProps) {
+        const { deck, navigation } = this.props
+
+        if (deck !== prevProps.deck) {
+            navigation.goBack()
+        }
     }
 
     render () {
-        const { navigation, route } = this.props
-        const deck = route.params
+        const { deck, navigation } = this.props
+
+        if (!deck) return null
 
         return (
             <Screen style={styles.screen}>
@@ -33,7 +39,7 @@ class DeckDetailsScreen extends Component{
                     <AppButton
                         title='Add Card'
                         outline
-                        onPress={() => navigation.navigate(routes.NEWQUIZ)}/>
+                        onPress={() => navigation.navigate(routes.NEWQUIZ, deck.id)}/>
 
                     <AppButton title='Start Quiz' onPress={() => navigation.navigate(routes.QUIZ)}/>
 
@@ -77,5 +83,13 @@ const styles = StyleSheet.create({
     },
 })
 
+function mapStateToProps(state, { route }) {
+    const { title } = route.params
+    const deck = state[title]
 
-export default connect()(DeckDetailsScreen)
+    return {
+        deck,
+    }
+}
+
+export default connect(mapStateToProps)(DeckDetailsScreen)
