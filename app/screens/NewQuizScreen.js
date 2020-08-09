@@ -18,11 +18,12 @@ const validationSchema =  Yup.object().shape({
 })
 
 class NewQuizScreen extends Component {
-    handleAddDeck = (values) => {
+    handleAddDeck = (values, { resetForm }) => {
         const { question, answer } = values
         const id = this.props.route.params
 
         this.props.dispatch(addCardToDeck(id, { question, answer }))
+        resetForm()
         this.props.navigation.goBack()
     }
 
@@ -31,7 +32,7 @@ class NewQuizScreen extends Component {
             <Screen style={styles.screen}>
                 <Form
                     initialValues={{ question: '', answer: ''  }}
-                    onSubmit={values => this.handleAddDeck(values)}
+                    onSubmit={(values, formikBag) => this.handleAddDeck(values, formikBag)}
                     validationSchema={validationSchema}
                 >
                     <FormField maxLength={255} name='question' placeholder='Question'/>

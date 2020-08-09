@@ -20,17 +20,17 @@ export function addDeck (deck) {
     }
 }
 
-export function deleteDeck (title) {
+export function deleteDeck (deck) {
     return {
         type: DELETE_DECK,
-        title,
+        deck,
     }
 }
 
-export function addCard(title, card) {
+export function addCard(deck, card) {
     return {
         type: ADD_CARD,
-        title,
+        deck,
         card,
     }
 }
@@ -53,16 +53,16 @@ export function saveDeckTitle(title) {
 
 export function removeDeck(id) {
     return dispatch => {
-        return _removeDeck(id).then(title => {
-            dispatch(deleteDeck(title))
+        return _removeDeck(id).then(deck => {
+            dispatch(deleteDeck(deck))
         })
     }
 }
 
 export function addCardToDeck(id, card) {
     return dispatch => {
-        return _addCardToDeck(id, card).then(title => {
-            dispatch(addCard(title, card))
+        return _addCardToDeck(id, card).then(deck => {
+            dispatch(addCard(deck, card))
         })
     }
 }

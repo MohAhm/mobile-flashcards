@@ -93,7 +93,7 @@ export const _removeDeck = async (id) => {
 
         await AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(items))
 
-        return deck.title
+        return deck
     } catch (error) {
         console.log(error)
     }
@@ -109,7 +109,7 @@ export const _addCardToDeck = async (id, card) => {
             }
         }))
 
-        return deck.title
+        return deck
     } catch (error) {
         console.log(error)
     }

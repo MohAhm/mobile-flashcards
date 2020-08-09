@@ -11,7 +11,6 @@ import {
 } from '../components/forms'
 import Screen from '../components/Screen'
 import AppText from '../components/AppText'
-import routes from '../navigation/routes'
 import colors from '../config/colors'
 
 
@@ -20,23 +19,10 @@ const validationSchema =  Yup.object().shape({
 })
 
 class NewDeckScreen extends Component {
-    state = {
-        deckTitle: ''
-    }
-
-    handleAddDeck = title => {
+    handleAddDeck = (title, { resetForm }) => {
         this.props.dispatch(saveDeckTitle(title))
-        this.setState({ deckTitle: title })
-    }
-
-    componentDidUpdate(prevProps) {
-        const { deckTitle } = this.state
-        const { decks, navigation } = this.props
-
-        if (decks !== prevProps.decks) {
-            navigation.navigate(routes.DECKDETAILS, decks[deckTitle])
-            this.setState({ deckTitle: '' })
-        }
+        resetForm()
+        this.props.navigation.goBack()
     }
 
     render () {
@@ -46,7 +32,7 @@ class NewDeckScreen extends Component {
 
                 <Form
                     initialValues={{ title: '' }}
-                    onSubmit={values => this.handleAddDeck(values.title)}
+                    onSubmit={(values, formikBag) => this.handleAddDeck(values.title, formikBag)}
                     validationSchema={validationSchema}
                 >
                     <FormField maxLength={255} name='title' placeholder='Deck Title'/>
@@ -73,10 +59,4 @@ const styles = StyleSheet.create({
     },
 })
 
-function mapStateToProps(state) {
-    return {
-        decks: state
-    }
-}
-
-export default connect(mapStateToProps)(NewDeckScreen)
+export default connect()(NewDeckScreen)

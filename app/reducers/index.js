@@ -16,16 +16,16 @@ export default function decks (state = {}, action) {
             }
 
         case DELETE_DECK:
-            const { [action.title]: value, ...restState } = state
+            const { [action.deck.title]: value, ...restState } = state
 
             return restState
 
         case ADD_CARD:
             return {
                 ...state,
-                [action.title]: {
-                    ...state[action.title],
-                    questions: [...state[action.title].questions].concat(action.card)
+                [action.deck.title]: {
+                    ...state[action.deck.title],
+                    questions: [...state[action.deck.title].questions].concat(action.card)
                 }
             }
 

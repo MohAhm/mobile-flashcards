@@ -13,14 +13,7 @@ import colors from '../config/colors'
 class DeckDetailsScreen extends Component{
     handleDeleteDeck = id => {
         this.props.dispatch(removeDeck(id))
-    }
-
-    componentDidUpdate(prevProps) {
-        const { deck, navigation } = this.props
-
-        if (deck !== prevProps.deck) {
-            navigation.goBack()
-        }
+        this.props.navigation.goBack();
     }
 
     render () {
@@ -85,10 +78,9 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state, { route }) {
     const { title } = route.params
-    const deck = state[title]
 
     return {
-        deck,
+        deck: state[title],
     }
 }
 
