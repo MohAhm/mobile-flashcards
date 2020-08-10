@@ -1,13 +1,15 @@
 import React from 'react'
-import { StyleSheet, Text } from 'react-native'
-import Screen from '../components/Screen'
 
-export default function QuizScreen() {
+import Screen from '../components/Screen'
+import QuizList from '../components/QuizList'
+
+
+export default function QuizScreen(props) {
+    const questions = props.route.params
+
     return (
         <Screen>
-            <Text>Quiz View</Text>
+            <QuizList questions={questions} />
         </Screen>
     )
 }
-
-const styles = StyleSheet.create({})

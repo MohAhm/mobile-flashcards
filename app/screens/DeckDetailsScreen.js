@@ -34,7 +34,7 @@ class DeckDetailsScreen extends Component{
                         outline
                         onPress={() => navigation.navigate(routes.NEWQUIZ, deck.id)}/>
 
-                    <AppButton title='Start Quiz' onPress={() => navigation.navigate(routes.QUIZ)}/>
+                    <AppButton title='Start Quiz' onPress={() => navigation.navigate(routes.QUIZ, deck.questions)}/>
 
                     <AppButton
                         title='Delete Deck'

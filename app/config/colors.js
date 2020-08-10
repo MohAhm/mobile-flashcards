@@ -1,6 +1,6 @@
 export default {
     purple: '#292477',
-    lightPurp:'#7c53c3',
+    lightPurp:'#5049c8',
     light: '#eeedfa',
     white: '#fff',
     dark: '#0c0c0c',
