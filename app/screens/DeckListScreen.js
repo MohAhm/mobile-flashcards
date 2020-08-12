@@ -21,8 +21,8 @@ class DeckListScreen extends Component {
 
         if (Object.entries(decks).length === 0) {
             return (
-                <Screen style={styles.screen}>
-                    <AppText style={styles.text}>You don't have any decks. Why don't you create new deck?</AppText>
+                <Screen style={styles.center}>
+                    <AppText style={styles.text}>You don't have any decks. Why don't you create a new deck?</AppText>
                 </Screen>
             )
         }
@@ -51,11 +51,18 @@ const styles = StyleSheet.create({
         backgroundColor: colors.light,
     },
 
+    center: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor: colors.light,
+    },
+
     text: {
-        fontSize: 25,
-        fontWeight: 'bold',
+        fontSize: 22,
         textAlign: 'center',
-        marginTop: 40,
+        fontWeight: 'bold',
     },
 })
 

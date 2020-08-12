@@ -1,15 +1,27 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { ScrollView, Text, StyleSheet, Dimensions, View } from 'react-native'
 import Quiz from './Quiz'
+import QuizResult from './QuizResult'
 
 const screenWidth = Dimensions.get('screen').width // temp
 
-export default function QuizList({ questions = [] }) {
+export default function QuizList({ questions = [], navigation }) {
     const scrollView = useRef()
+    const [count, setCount] = useState(0)
 
-    // Restart:
-    // 1.    reset count state to 0
-    // 2.    scrollTo x: 0
+    const handleCount = isCorrect => {
+        if(isCorrect)
+            setCount(count + 1)
+    }
+
+    const handleRestart = scrollView => {
+        setCount(0)
+        scrollView.current.scrollTo({ x: 0 })
+    }
+
+    const handleGoBack = () => {
+        navigation.goBack()
+    }
 
     return (
         <ScrollView
@@ -27,20 +39,24 @@ export default function QuizList({ questions = [] }) {
                     scroll={scrollView}
                     pageNum={i+1}
                     remainingInfo={`${i+1} / ${questions.length}`}
+                    onCount={handleCount}
                 />
             ))}
 
-            <View style={styles.contentContainer}>
-                <Text>Result</Text>
+            <View style={styles.resultContainer}>
+                <QuizResult
+                    percentage={Math.floor((100 * count) / questions.length)}
+                    onRestart={() => {handleRestart(scrollView)}}
+                    onBack={() => {handleGoBack()}}
+                />
             </View>
         </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
-    contentContainer: {
+    resultContainer: {
         flexDirection: 'row',
         width: screenWidth,
-        marginVertical: 20,
     },
 })

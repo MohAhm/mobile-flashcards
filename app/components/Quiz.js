@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View, Platform, Dimensions } from 'react-native'
 import FlipCard from 'react-native-flip-card'
 
@@ -8,10 +8,21 @@ import colors from '../config/colors'
 
 const screenWidth = Dimensions.get('screen').width
 
-export default function Quiz(props) {
-    const { question, answer, remainingInfo, scroll, pageNum } = props
+export default function Quiz({ question, answer, remainingInfo, scroll, pageNum, onCount } ) {
+    const [flip, setFlip] = useState(false)
+    const [show, setShow] = useState(false)
 
-    // handleScroll = () => {}
+    const handleShowAnswer = () => {
+        setFlip(!flip)
+        setShow(!show)
+    }
+
+    const handleScroll = (pageNum, isCorrect) => {
+        scroll.current.scrollTo({ x: screenWidth * pageNum})
+        setFlip(!flip)
+        setShow(!show)
+        onCount(isCorrect)
+    }
 
     return (
         <View>
@@ -19,9 +30,12 @@ export default function Quiz(props) {
 
             <View style={styles.contentContainer}>
                 <FlipCard
+                    flip={flip}
+                    clickable={false}
                     style={styles.card}
                     flipHorizontal={true}
                     flipVertical={false}
+                    onFlipStart={() => {setFlip(true)}}
                 >
                     {/* Face Side */}
                     <View style={styles.cardContent}>
@@ -40,14 +54,29 @@ export default function Quiz(props) {
                 </FlipCard>
             </View>
 
-            <View style={styles.buttonContainer}>
-                <AppButton
-                    title='Correct'
-                    outline
-                    color='success'
-                    onPress={() => { scroll.current.scrollTo({ x: screenWidth * pageNum})}} />
-                <AppButton title='Incorrect' outline color='danger' onPress={() => console.log('Incorrect')} />
-            </View>
+            {!show
+                ?   <View style={styles.buttonContainer}>
+                        <AppButton
+                            title='Show Answer'
+                            outline
+                            onPress={() => {handleShowAnswer()}}
+                        />
+                    </View>
+
+                :   <View style={styles.buttonContainer}>
+                        <AppButton
+                            title='Correct'
+                            outline
+                            color='success'
+                            onPress={() => {handleScroll(pageNum, true)}} />
+
+                        <AppButton
+                            title='Incorrect'
+                            outline
+                            color='danger'
+                            onPress={() => {handleScroll(pageNum, false)}} />
+                    </View>
+            }
         </View>
     )
 }
@@ -55,6 +84,7 @@ export default function Quiz(props) {
 const styles = StyleSheet.create({
     contentContainer: {
         flexDirection: 'row',
+        justifyContent: 'center',
         width: screenWidth,
         marginVertical: 20,
     },
@@ -89,6 +119,22 @@ const styles = StyleSheet.create({
     info: {
         color: colors.white,
         alignSelf: 'center',
+    },
+
+    showAnswerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 60,
+    },
+
+    showAnswerText: {
+        color: colors.purple,
+        fontWeight: 'bold',
+    },
+
+    icon: {
+        marginLeft: 10,
     },
 
     buttonContainer: {
