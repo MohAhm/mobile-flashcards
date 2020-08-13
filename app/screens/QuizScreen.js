@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet } from 'react-native'
 
 import Screen from '../components/Screen'
 import QuizList from '../components/QuizList'
 import AppText from '../components/AppText'
 import colors from '../config/colors'
+import { clearLocalNotification, setLocalNatification } from '../utils/notification'
 
 
 export default function QuizScreen({ route, navigation }) {
+    useEffect(() => {
+        clearLocalNotification()
+            .then(setLocalNatification)
+    }, [])
+
     const questions = route.params
 
     if (questions.length === 0) {
