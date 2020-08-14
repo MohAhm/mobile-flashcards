@@ -1,16 +1,39 @@
-import React from 'react'
-import { StyleSheet, View, TouchableWithoutFeedback, Platform } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, View, TouchableWithoutFeedback, Platform, Animated } from 'react-native'
 
-import AppText from './AppText'
 import colors from '../config/colors'
+import defaultStyles from '../config/styles'
 
 export default function Deck({ title, numCard, onPress }) {
+    const [bounceValue] = useState(new Animated.Value(1))
+
+    const handleBounceValue = () => {
+        Animated.sequence([
+            Animated.timing(bounceValue, { duration: 200, toValue: 1.09, useNativeDriver: true }),
+            Animated.spring(bounceValue, { toValue: 1, friction: 4, useNativeDriver: true }),
+        ]).start()
+
+        setTimeout(() => {
+            onPress()
+        }, 500)
+    }
+
     return (
-        <TouchableWithoutFeedback onPress={onPress}>
+        <TouchableWithoutFeedback onPress={handleBounceValue}>
             <View style={styles.deck}>
                 <View style={styles.detailsContainer}>
-                    <AppText style={styles.title}>{title}</AppText>
-                    <AppText style={styles.numCard}>{numCard}</AppText>
+                    <Animated.Text
+                        style={[
+                            defaultStyles.text,
+                            styles.title,
+                            {transform: [{scale: bounceValue}]}
+                        ]}>{title}</Animated.Text>
+                    <Animated.Text
+                        style={[
+                            defaultStyles.text,
+                            styles.numCard,
+                            {transform: [{scale: bounceValue}]}
+                        ]}>{numCard}</Animated.Text>
                 </View>
             </View>
         </TouchableWithoutFeedback>
