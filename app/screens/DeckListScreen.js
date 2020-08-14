@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 
-import { handleInitialData, clearData } from '../actions'
+import { handleInitialData } from '../actions'
 import Screen from '../components/Screen'
 import AppText from '../components/AppText'
 import Deck from '../components/Deck'
@@ -12,7 +12,6 @@ import colors from '../config/colors'
 
 class DeckListScreen extends Component {
     componentDidMount() {
-        // this.props.dispatch(clearData()) // temp
         this.props.dispatch(handleInitialData())
     }
 
@@ -36,7 +35,7 @@ class DeckListScreen extends Component {
                         <Deck
                             title={decks[item].title}
                             numCard={decks[item].questions.length + ' cards'}
-                            onPress={() => navigation.navigate(routes.DECKDETAILS, decks[item])}
+                            onPress={() => navigation.navigate(routes.DECKDETAILS, decks[item].title)}
                         />
                     }
                 />

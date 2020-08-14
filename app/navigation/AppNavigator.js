@@ -29,7 +29,7 @@ const AppNavigator = () => (
         <Stack.Screen
             name={routes.DECKDETAILS}
             component={DeckDetailsScreen}
-            options={({ route }) => ({ title: route.params.title })}
+            options={({ route }) => ({ title: route.params })}
         />
 
         <Stack.Screen

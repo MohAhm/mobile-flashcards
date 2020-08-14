@@ -12,6 +12,7 @@ import {
 import Screen from '../components/Screen'
 import AppText from '../components/AppText'
 import colors from '../config/colors'
+import routes from '../navigation/routes'
 
 
 const validationSchema =  Yup.object().shape({
@@ -22,7 +23,7 @@ class NewDeckScreen extends Component {
     handleAddDeck = (title, { resetForm }) => {
         this.props.dispatch(saveDeckTitle(title))
         resetForm()
-        this.props.navigation.goBack()
+        this.props.navigation.navigate(routes.DECKDETAILS, title)
     }
 
     render () {

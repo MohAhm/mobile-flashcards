@@ -66,23 +66,3 @@ export function addCardToDeck(id, card) {
         })
     }
 }
-
-
-
-export const CLEAR_DATA = 'CLEAR_DATA' // temp ...
-
-// temp ...
-export function clear() {
-    return {
-        type: CLEAR_DATA,
-    }
-}
-
-// temp ...
-export function clearData() {
-    return dispatch => {
-        return clearStorage().then(() => {
-            dispatch(clear())
-        })
-    }
-}

@@ -114,13 +114,3 @@ export const _addCardToDeck = async (id, card) => {
         console.log(error)
     }
 }
-
-// temp ...
-export const clearStorage = async () => {
-    try {
-        const keys = await AsyncStorage.getAllKeys();
-        await AsyncStorage.multiRemove(keys);
-    } catch (error) {
-        console.log(error)
-    }
-}

@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(state, { route }) {
-    const { title } = route.params
+    const title = route.params
 
     return {
         deck: state[title],

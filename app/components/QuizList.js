@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react'
-import { ScrollView, Text, StyleSheet, Dimensions, View } from 'react-native'
+import { ScrollView, StyleSheet, Dimensions, View } from 'react-native'
 import Quiz from './Quiz'
 import QuizResult from './QuizResult'
 
-const screenWidth = Dimensions.get('screen').width // temp
+const screenWidth = Dimensions.get('screen').width
 
 export default function QuizList({ questions = [], navigation }) {
     const scrollView = useRef()
